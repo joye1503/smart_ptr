@@ -780,7 +780,7 @@ matrix:
 
 install:
   - lscpu
-  - more /proc/cpuinfo
+  - cpuinfo
   - BOOST_BRANCH=develop && [ "$TRAVIS_BRANCH" == "master" ] && BOOST_BRANCH=master || true
   - cd ..
   - git clone -b $BOOST_BRANCH https://github.com/boostorg/boost.git boost-root
