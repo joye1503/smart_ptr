@@ -780,7 +780,8 @@ matrix:
 
 install:
   - lscpu
-  - sudo apt-get -y install linux-tools-5.4.0-54-generic linux-tools-generic
+  #- sudo apt-get -y install linux-tools-5.4.0-54-generic linux-tools-generic
+  - sudo apt-get update && sudo apt-get install linux-tools-$(uname -r) linux-tools-generic
   - perf --help
   - BOOST_BRANCH=develop && [ "$TRAVIS_BRANCH" == "master" ] && BOOST_BRANCH=master || true
   - cd ..
