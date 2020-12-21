@@ -28,17 +28,14 @@ matrix:
     - os: linux
       arch: amd64
       compiler: g++
-      dist: focal
       env: TOOLSET=gcc COMPILER=g++ CXXSTD=03,11,14
     - os: linux
       arch: arm64
-      dist: focal
       compiler: g++
       env: TOOLSET=gcc COMPILER=g++ CXXSTD=03,11,14
     - os: linux
       arch: arm64-graviton2
       compiler: g++
-      dist: focal
       env: TOOLSET=gcc COMPILER=g++ CXXSTD=03,11,14
     - os: linux
       arch: ppc64le
