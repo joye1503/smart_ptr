@@ -780,7 +780,7 @@ matrix:
 
 install:
   - lscpu
-  - sudo aptitude update && sudo aptitude install linux-tools-$(uname -r) linux-tools-generic
+  - sudo apt update && sudo apt -y install linux-tools-$(uname -r) linux-tools-generic
   - perf --help
   - BOOST_BRANCH=develop && [ "$TRAVIS_BRANCH" == "master" ] && BOOST_BRANCH=master || true
   - cd ..
