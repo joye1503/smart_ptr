@@ -781,6 +781,7 @@ matrix:
 install:
   - lscpu
   - sudo apt-get install linux-tools-generic
+  - perf --help
   - BOOST_BRANCH=develop && [ "$TRAVIS_BRANCH" == "master" ] && BOOST_BRANCH=master || true
   - cd ..
   - git clone -b $BOOST_BRANCH https://github.com/boostorg/boost.git boost-root
@@ -806,13 +807,13 @@ install:
   - git submodule init libs/bind
   - git submodule update # no --jobs 3 on non-amd64
   - cp -r $TRAVIS_BUILD_DIR/* libs/smart_ptr
-  - ./bootstrap.sh
-  - ./b2 headers
+  - perf stat ./bootstrap.sh
+  - perf stat ./b2 headers
 
 script:
   - |-
     echo "using $TOOLSET : : $COMPILER ;" > ~/user-config.jam
-  - ./b2 -j3 libs/smart_ptr/test toolset=$TOOLSET cxxstd=$CXXSTD variant=debug,release ${UBSAN:+cxxflags=-fsanitize=undefined cxxflags=-fno-sanitize-recover=undefined linkflags=-fsanitize=undefined debug-symbols=on} ${LINKFLAGS:+linkflags=$LINKFLAGS}
+  - perf stat ./b2 -j3 libs/smart_ptr/test toolset=$TOOLSET cxxstd=$CXXSTD variant=debug,release ${UBSAN:+cxxflags=-fsanitize=undefined cxxflags=-fno-sanitize-recover=undefined linkflags=-fsanitize=undefined debug-symbols=on} ${LINKFLAGS:+linkflags=$LINKFLAGS}
 
 notifications:
   email:
