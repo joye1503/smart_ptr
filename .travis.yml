@@ -4,7 +4,7 @@
 
 language: cpp
 
-dist: xenial
+dist: focal
 
 virt: lxd
 group: edge
