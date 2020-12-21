@@ -780,7 +780,7 @@ matrix:
 
 install:
   - lscpu
-  - sudo apt-get -y install inux-tools-generic
+  - sudo apt-get -y install linux-tools-generic
   - perf --help
   - BOOST_BRANCH=develop && [ "$TRAVIS_BRANCH" == "master" ] && BOOST_BRANCH=master || true
   - cd ..
