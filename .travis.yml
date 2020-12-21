@@ -780,7 +780,6 @@ matrix:
 
 install:
   - lscpu
-  - cpuinfo
   - sudo apt-get install linux-tools-generic
   - BOOST_BRANCH=develop && [ "$TRAVIS_BRANCH" == "master" ] && BOOST_BRANCH=master || true
   - cd ..
