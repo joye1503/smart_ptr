@@ -780,10 +780,20 @@ matrix:
 
 install:
   - lscpu
-  - uname -r
+  - uname -a
+  - sudo apt install dmidecode
+  - sudo dmidecode --type 17 | more
+  - sudo apt install hwinfo
+  - hwinfo --short
+  - sudo apt install inxi
+  - inxi -Fx
   #- sudo apt-get -y install linux-tools-5.4.0-54-generic linux-tools-generic
   - sudo apt-get update && sudo apt-get install linux-tools-$(uname -r) linux-tools-generic
   - perf --help
+  - sudo -i
+  - echo -1 >/proc/sys/kernel/perf_event_paranoid
+  - exit
+  #- sudo sysctl -w kernel.perf_event_paranoid=-1
   - BOOST_BRANCH=develop && [ "$TRAVIS_BRANCH" == "master" ] && BOOST_BRANCH=master || true
   - cd ..
   - git clone -b $BOOST_BRANCH https://github.com/boostorg/boost.git boost-root
@@ -809,13 +819,13 @@ install:
   - git submodule init libs/bind
   - git submodule update # no --jobs 3 on non-amd64
   - cp -r $TRAVIS_BUILD_DIR/* libs/smart_ptr
-  - perf stat ./bootstrap.sh
-  - perf stat ./b2 headers
+  - ./bootstrap.sh
+  - ./b2 headers
 
 script:
   - |-
     echo "using $TOOLSET : : $COMPILER ;" > ~/user-config.jam
-  - perf stat ./b2 -j3 libs/smart_ptr/test toolset=$TOOLSET cxxstd=$CXXSTD variant=debug,release ${UBSAN:+cxxflags=-fsanitize=undefined cxxflags=-fno-sanitize-recover=undefined linkflags=-fsanitize=undefined debug-symbols=on} ${LINKFLAGS:+linkflags=$LINKFLAGS}
+  - ./b2 -j3 libs/smart_ptr/test toolset=$TOOLSET cxxstd=$CXXSTD variant=debug,release ${UBSAN:+cxxflags=-fsanitize=undefined cxxflags=-fno-sanitize-recover=undefined linkflags=-fsanitize=undefined debug-symbols=on} ${LINKFLAGS:+linkflags=$LINKFLAGS}
 
 notifications:
   email:
